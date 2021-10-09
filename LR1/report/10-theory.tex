@@ -1,0 +1,37 @@
+\section*{Theory}
+
+Time complexity is an algorithm characteristics that shows an amount of time needed for execution of algorithm
+on a particular size of input data. It can be found by calculating the amount of elementary operations (multiplication, substracting etc.) which are supposed to
+be executed for a constant period of time. This characteristic allows to compare different algorithms effeciency independetly of particular
+computational machines that may perform with different effeciency. Time complexity often expressed as $T(n)$ where $n$ is size of input data and 
+analyzed in condition of $n \rightarrow \infty$. Often use only high order terms of time complexity regardless their constant coefficents.
+For that purpose use "Big O" notation. $f(x) = O(g(x))$ when $f(x) \leq C g(x), n \rightarrow \infty$.
+
+\subsection*{Algorithm description}
+
+\textbf{Constant function} - due to the fact that result of this function does not depends on input, the execution time does not depends on 
+input size, too thus it is denoted as $O(1)$ or constant.
+
+\textbf{Sum and product function} - both these function iterate over vector $v$ and perform elementary operations
+one for each element that means that execution time depends linearly on input size and can be expressed as $O(n)$ where n is number of elements in vector.
+
+\textbf{Polynomial.} For naive calculation of polynomial each term should be calculated and then summarized. For calculation of term should be calculated some pow of value for which polynomial is calculated (1.5 in our case).
+With an algorithm for fast pow calculation it can be done in $O(logN)$ elementary operations. Thus, calculations of all terms costs $O(NlogN)$ operations. 
+
+This algorithm can be optimized using Horner method of calculation when polynomial is expressed as $v_0 + x(v_1 + x(v_2 + ...))$. Calculation of this form of polynomial requires $O(n)$ actions.
+
+\textbf{Bubble sort}. The main idea of this algorithm is to push the biggest elemnts from start to the end of array.
+Implementation of algorithm consists of 2 nested loops iterating over whole array each and performing elementary operation of swapping elements on each iteration.
+Thus, the execution time can be expressed as $O(n^2)$
+
+\textbf{Quicksort}. The idea of algorithm is to divide array into 2 parts: one with elements lower that choosen pivot element and the other with elements higher.
+After that algorithm is executed on each of 2 parts. The execution time depends on pivot element choosing strategy. The best results obtained when pivot is median of 
+elements and gives the time of $O(NlogN)$ while choosing pivot element as minimum of element on every partition gives the worst results and $O(n^2)$. However, for random generated arrays the
+average execution time is $O(NlogN)$.
+
+\textbf{Timsort}. This is a hybrid stable sorting algorithm, derived from merge sort that use divide and conquer technnic and insertion sort, that was designed to perform effectively on various of real-word data.
+The algorithm finds subsequences of the data that are already ordered (runs) and uses them to sort the remainder more efficiently. This is done by merging runs until certain criteria are fulfilled. Timsort has been Python's standard sorting algorithm since version 2.3. 
+As well as Mergesort Timsort has average execution time of $O(NlogN)$.
+
+\textbf{Matrix product} $C$ for 2 matrices $A, B$ of size $n \times k$ and $k \times m$ can be expressed as $c_{i, j} = \Sigma_{q=1}^{k}a_{i,k} \cdot b_{k, j}$ that is dot product for every pair
+of row of matrix A and column of matrix b. Each dot product has $O(k)$ execution time and there are $O(nm)$ dot products that means that execution time of full algorithm is $O(n^3)$.

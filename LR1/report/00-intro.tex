@@ -1,0 +1,23 @@
+\section*{Formulation of problem}
+
+\subsection*{Goal}
+The goal of current work is to study of the time complexity of different algorithms by conducting experiments on different input data.
+
+\subsection*{Subtasks}
+
+To achieve the goal different algorithms implementations execution time was measured and compared with its theoretical value. 
+Next subtasks was solved:
+
+\begin{itemize}
+    \item $f(v) = const$
+    \item $f(v) = \Sigma_{k=1}^{n} v_k$
+    \item $f(v) = \Pi_{k=1}^{n} v_k $
+    \item $f(v) = \Sigma_{k=1}^{n} v_kx^{k - 1}$, also with Horner's method
+    \item Bubble sort
+    \item Quick Sort
+    \item Timsort
+    \item Matrix product of 2 square matrices size of $ n\times n$ 
+\end{itemize}
+
+Where $v$ is n-dimensional random vector with non-negative elements. In every subtask $n=\overline{1,2000}$, except
+the task with matrices product due to long execution time, in that case the maximum n was of 1000.

@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[12pt,a4paper]{report}
 \usepackage[T1]{fontenc}
 \usepackage{newtxmath,newtxtext}
 \usepackage{indentfirst}     % Отступ в первом абзаце
@@ -9,7 +9,15 @@
 \usepackage[left=2.5cm, right=1.5cm, top=2.5cm, bottom=2.5cm]{geometry}
 \usepackage[medium]{titlesec}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{array,caption}
+\usepackage{listings}
+\usepackage{hyperref}
 \graphicspath{ {./images/} }
+
+\lstset{language=python, frame = single}  
+\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt, breaklines=true, basicstyle=\small}  
+%\lstset{emph={square}, emphstyle=\color{red}, emph={[2]root,base}, emphstyle {[2]\color{blue}}}
 
 \begin{document}
 	\vspace*{15ex}
@@ -38,6 +46,9 @@
 	\end{center}
 	\newpage
 
-    \include{00-intro.tex}
-
+    \include{00-intro}
+	\include{10-theory}
+	\include{20-results}
+	\include{30-conclusion}
+	\include{40-appendix}
 \end{document}
