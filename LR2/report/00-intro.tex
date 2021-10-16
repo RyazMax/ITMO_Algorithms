@@ -1,0 +1,40 @@
+\section*{Formulation of problem}
+
+\subsection*{Goal}
+The use of direct methods (one-dimensional methods of exhaustive search,
+dichotomy, golden section search; multidimensional methods of exhaustive search,
+Gauss (coordinate descent), Nelder-Mead) in the tasks of unconstrained nonlinear
+optimization
+\subsection*{Subtasks}
+\textbf{I.} Use the one-dimensional methods of exhaustive search,
+dichotomy and golden section search to find an approximate (with precision $\epsilon = 0.001$) solution
+$x: f(x) \rightarrow min$ for the following functions and domains:
+\begin{enumerate}
+    \item $f(x) = x^3, x \in [0, 1]$;
+    \item $f(x) = |x - 0.2|, x \in [0, 1]$;
+    \item $f(x) = x sin \frac{1}{x}, x \in [0.01, 1]$;
+\end{enumerate}
+
+Calculate the number of f-calculations and the number of iterations performed in each method and analyze the results.
+
+\textbf{II.} Generate random numbers $\alpha \in (0, 1)$ and $\beta \in (0, 1)$. Furthermore, generate the noisy data ${x_k, y_k}$, where $k = 0, ..., 100$ according to the following rule:
+
+\begin{equation*}
+    y_k = \alpha x_k + \beta + \delta_k, x_k = \frac{k}{100}
+\end{equation*}
+
+where $\delta_k \sim N(0, 1)$ are values of random variable with standard normal distribution. Approximate the data by the following linear and rational functions:
+
+\begin{enumerate}
+    \item $F(x, a, b) = ax + b$,
+    \item $F(x, a, b) = \frac{a}{1 + bx}$,
+\end{enumerate}
+
+by means of least squares through the numerical minimization (with precision $\epsilon = 0.001$) of the following function:
+
+\begin{equation*}
+    D(a, b) = \Sigma_{k=0}^{100} (F(x_k, a, b) - y_k)^2.
+\end{equation*}
+
+To solve the minimization problem, use the methods of exhaustive search, Gauss and Nelder-Mead. If necessary, set the initial approximations and other parameters of the methods.
+Visualize the data and the approximants obtained in a plot seperately for each type of approximant.

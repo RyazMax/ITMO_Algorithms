@@ -1,0 +1,59 @@
+\section*{Theory}
+
+Optimization methods are the methods for finding optimal (in some sense) sollutions
+for mathematical models which are usually expressed via an objective function $f = f(x)$, where $x$ is generally a multidimensional vector.
+
+To solve the optimization problem $f(x) \rightarrow min_{x\in Q}$ means to find $x^{*} \in Q$ where $Q$ is the region of acceptability, such  that $f$ reaches the minimal value at $x^{*}$.
+
+For unconstrained optimization methods (which are used in this work) the region of acceptability $Q$ is not defined.
+
+Methods used are direct or zero-order methods that means they use only values of function $f(x)$ and do not use its derivatives. It allows to apply these methods for a wide class of functions, although they have slow convergence comparing to higher order methods. 
+\subsection*{One-dimensional methods}
+\subsubsection*{Exhaustive (brute-force) search}
+
+In this method points in $[a, b]$ are considered
+\begin{equation*}
+    x_k = a + k\frac{b - a}{n}, k = 0, ..., n
+\end{equation*}
+where $n$ is chosen so that $\frac{b - a}{n} \leq \epsilon$.
+The means that minimum number of points is $n = \frac{b - a}{\epsilon}$.
+After that function is calculated in every point and the point with minimum value considered to be minimum.
+
+This method is very slow, although it can be appied to wide variety of functions and for finding initial approximations.
+
+\subsubsection*{Dichotomy}
+
+This method requires optimized function to be convex. The idea of method is to dividing the initial interval and find values
+of function in points $x_1 = \frac{a + b - \delta}{2}$, $x_2 = \frac{a + b + \delta}{2}$ with offset of middle $\delta$ that has to be choosen so that it would be less then $\epsilon$.
+After that depending of value of function the left or the right bound is changed so that interval becomes slower with each iteration.
+\subsubsection*{Golden section search}
+
+Basicaly, this method is modification of dichotomy method where $\delta$ is choosen in special way.
+$x_1 = a + \frac{3 - \sqrt{5}}{2}(b - a)$, $x_2 = b + \frac{\sqrt{5} - 3}{2}(b - a)$. Values are choosen so that $\frac{x_1 + x_2}{2} = \frac{a + b}{2}$.
+It allows to evaluate $f(x)$ only ones per iteration.
+
+\subsection*{Multidimensional methods}
+\subsubsection*{Exhaustive (brute-force) search}
+
+Two dimensional exhaustive search is similar to one-dimensional but it evaluates $f(x)$ in every point of two-dimensional (with axis across 2 function arguments) grid.
+
+\subsubsection*{Gaus (coordinate descent)}
+
+This method iteratively optimize function with respect to one argument. Firstly, it fixes all arguments except the first one and finds the minimum of that function. The next steps are the same for other function arguments.
+The search is stoped when the difference between 2 iterations is lower then $\epsilon$. In this work for one-dimensional optimization of each argument the golden-section method was used.
+
+\subsubsection*{Nelder-Mead}
+
+This method uses simplexes in $R^n$. In our case ($n = 2$), they are triangles.
+
+This is an heuristic approach wich can stuck in a local minima or cnverge to non-stationary point.
+The method consists of 7 main steps:
+\begin{enumerate}
+    \item \textbf{Preparation.} Three points for triangle are choosed ($x_1, x_2, x_3$) and function value is calculated for these points.
+    \item \textbf{Sorting.} Points are choosen that $x_h$ with largest $f_h$, $f_g$ with $x_g$ and the lowest $f_l$ and $x_l$.
+    \item \textbf{Gravity centre.} The gravity centre for the lowest points is calculated $x_c = \frac{1}{2}(x_g + x_l)$
+    \item \textbf{Reflection.} The point $x_h$ is reflected with respect to $x_c$.
+    \item \textbf{Expansion.} Check weather the dirrection of reflection is right and simplex can be moved in that dirrection. Otherwise, go to step 6.
+    \item \textbf{Shrinking.} Shrinks the simplex globally.
+    \item \textbf{Convergence check.} Check the mutal closeness of simplex vertices. If the required precision is not achieved, go to Step 2.
+\end{enumerate}
