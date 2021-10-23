@@ -1,0 +1,27 @@
+\section*{Formulation of problem}
+
+\subsection*{Goal}
+The use of first- and second-order methods (Gradient Descent, Non-linear Conjugate Gradient Descent, Newton's method and Levenberg-Marquardt algorithm) in the tasks of unconstrained nonlinear
+optimization
+\subsection*{Subtasks}
+\textbf{I.} Generate random numbers $\alpha \in (0, 1)$ and $\beta \in (0, 1)$. Furthermore, generate the noisy data ${x_k, y_k}$, where $k = 0, ..., 100$ according to the following rule:
+
+\begin{equation*}
+    y_k = \alpha x_k + \beta + \delta_k, x_k = \frac{k}{100}
+\end{equation*}
+
+where $\delta_k \sim N(0, 1)$ are values of random variable with standard normal distribution. Approximate the data by the following linear and rational functions:
+
+\begin{enumerate}
+    \item $F(x, a, b) = ax + b$,
+    \item $F(x, a, b) = \frac{a}{1 + bx}$,
+\end{enumerate}
+
+by means of least squares through the numerical minimization (with precision $\epsilon = 0.001$) of the following function:
+
+\begin{equation*}
+    D(a, b) = \Sigma_{k=0}^{100} (F(x_k, a, b) - y_k)^2.
+\end{equation*}
+
+To solve the minimization problem, use the methods of Gradient Descent, Non-linear Conjugate Gradient Descent, Newton's method and Levenberg-Marquardt algorithm. If necessary, set the initial approximations and other parameters of the methods.
+Visualize the data and the approximants obtained in a plot seperately for each type of approximant.
