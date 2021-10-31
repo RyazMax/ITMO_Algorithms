@@ -1,0 +1,40 @@
+\section*{Formulation of problem}
+
+\subsection*{Goal}
+The use of stochastic and metaheuristic algorithms (Simulated Annealing,
+Differential Evolution, Particle Swarm Optimization) in the tasks of unconstrained
+nonlinear optimization and the experimental comparison of them with Nelder-Mead
+and Levenberg-Marquardt algorithms
+
+\subsection*{Subtasks}
+\textbf{I.} Generate the noisy data $(x_k, y_k)$, where $k = 0, ..., 1000$ according to the rule:
+
+\begin{equation*}
+    y_k = \begin{cases}
+        -100 + \delta_k, & f(x_k) < -100,\\
+        f(x_k) + \delta_k, & |f(x_k)| \leq 100, x_k = \frac{3k}{1000}, \\
+        100 + \delta_k, & f(x_k) > 100, \\
+    \end{cases}
+\end{equation*}
+where 
+\begin{equation*}
+    f(x) = \frac{1}{x^2 -3x + 2}
+\end{equation*}
+
+where $\delta \sim N(0, 1)$ are values of a random variable with standard normal distribution.
+Approximate the data by the rational function
+
+\begin{equation*}
+    F(x, a, b, c, d) = \frac{ax + b}{x^2 + cx + d}
+\end{equation*}
+
+by means of least squares through the numerical minimization (with precision $\epsilon = 0.001$) of the following function:
+
+\begin{equation*}
+    D(a, b) = \Sigma_{k=0}^{1000} (F(x_k, a, b, c, d) - y_k)^2.
+\end{equation*}
+
+To solve the minimization problem, use Nelder-Mead algorithm, Levenberg-Marquardt algorithm and at least two of the methods among Simulated Annealing, Differential Evolution and Particle Swarm Optimization. If necessary, set the initial approximations and other parameters of the methods.
+Visualize the data and the approximants obtained in a plot seperately for each type of approximant.
+
+\textbf{II.} Choose at least 15 cities in the world having land transport connections between them. Calculate the distance matrix for them and then apply the Simulated Annealing method to solve the corresponding Travelling Salesman Problem. Visualize the results at the first and the last iteration.

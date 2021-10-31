@@ -1,0 +1,115 @@
+\section*{Theory}
+
+Optimization methods are the methods for finding optimal (in some sense) sollutions
+for mathematical models which are usually expressed via an objective function $f = f(x)$, where $x$ is generally a multidimensional vector.
+
+To solve the optimization problem $f(x) \rightarrow min_{x\in Q}$ means to find $x^{*} \in Q$ where $Q$ is the region of acceptability, such  that $f$ reaches the minimal value at $x^{*}$.
+
+For unconstrained optimization methods (which are used in this work) the region of acceptability $Q$ is not defined.
+
+\subsection*{Direct methods}
+\subsubsection*{Nelder-Mead}
+
+This method uses simplexes in $R^n$. In our case ($n = 2$), they are triangles.
+
+This is an heuristic approach wich can stuck in a local minima or cnverge to non-stationary point.
+The method consists of 7 main steps:
+\begin{enumerate}
+    \item \textbf{Preparation.} Three points for triangle are choosed ($x_1, x_2, x_3$) and function value is calculated for these points.
+    \item \textbf{Sorting.} Points are choosen that $x_h$ with largest $f_h$, $f_g$ with $x_g$ and the lowest $f_l$ and $x_l$.
+    \item \textbf{Gravity centre.} The gravity centre for the lowest points is calculated $x_c = \frac{1}{2}(x_g + x_l)$
+    \item \textbf{Reflection.} The point $x_h$ is reflected with respect to $x_c$.
+    \item \textbf{Expansion.} Check weather the dirrection of reflection is right and simplex can be moved in that dirrection. Otherwise, go to step 6.
+    \item \textbf{Shrinking.} Shrinks the simplex globally.
+    \item \textbf{Convergence check.} Check the mutal closeness of simplex vertices. If the required precision is not achieved, go to Step 2.
+\end{enumerate}
+
+\subsection*{Second-order methods}
+\subsubsection*{Levenberg-Marquardt algorithm (LMA)}
+
+The LMA is a pseudo-second order method, its application is to solve non-linear least squares problems.
+
+For a set $(x_i, y_i)^{m}_{i=1}$, find a column-vector $\beta^{*}$ of the parameters $\beta = (\beta_1, ..., \beta_n)^T$ of the function $f(x, \beta)$ such that
+
+\begin{equation*}
+    \beta^{*} = arg min_{\beta} S(\beta), S(\beta) = \Sigma_{i=1}^m (y_i - f(x_i, \beta))^2
+\end{equation*}
+
+Start with an initial guess for $\beta$. At each iteration, $\beta$ is replaced  $\beta + \Delta \beta$. To determine $\Delta \beta$, $f(x_i, \beta)$ is approximated by its linearization:
+\begin{equation*}
+    f(x_i, \beta + \Delta \beta) \approx f(x_i, \beta) + J_i \Delta \beta
+\end{equation*}
+
+\begin{equation*}
+    J_i = (\frac{\partial f(x_i, \beta_j)}{\partial \beta_j})_{j=1}^n
+\end{equation*}
+
+$J_i$ is a row-vector.
+
+The sum $S(\beta)$ has its minimum at a zero gradient with respect to $\beta$. The above-mentioned linear approximation of $f(x_i, \beta + \Delta \beta)$ gives
+
+\begin{equation*}
+    S(\beta + \Delta \beta) \approx \Sigma_{i=1}^m (y_i - f(x_i, \beta) - J_i \Delta \beta)^2
+\end{equation*}
+
+or in a vector notation,
+
+\begin{equation*}
+    S(\beta + \Delta \beta) \approx (y - f(\beta))^T(y - f(\beta)) - 2(y - f(\beta))^TJ\Delta \beta + \Delta \beta^TJ^TJ\Delta\beta
+\end{equation*}
+
+where $J$ is the Jacobian matrix, whose $i$-th row equals $J_i$, and where $f(\beta)$, $y$ and $\beta$ are column-vectors with $i$-th component $f(x_i, \beta), y_i, \beta_i$ respectively.
+
+Taking the derivative of $S(\beta + \Delta \beta)$ with respect to $\Delta \beta$ and setting to zero gives
+
+\begin{equation*}
+    (J^T J)\Delta \beta = J^T(y - f(\beta))
+\end{equation*}
+
+that is in fact a system of linear equations with respect to $\Delta \beta$.
+
+The system may be replaced by the following damped version:
+
+\begin{equation*}
+    (J^T J + \lambda I)\Delta \beta = J^T(y - f(\beta))
+\end{equation*}
+
+where $I$ is the identity matrix, giving the increment $\Delta \beta$ to the estimated parameter vector $\beta$. The damping factor $\lambda$ is adjusted at each iteration and should be chosen to guarantee the method's convergence.
+
+\subsection*{Stochastic and metaheuristic methods}
+\subsubsection*{Simulated annealing}
+Simulated annealing is a metaheuristic algorithm that solves the optimization problem similar to the process of annealing in metallurgy.
+It is inspired by the process of heating and controlled cooling of a material to increase the size of its crystals and reduce their deffects.
+
+Let $f: R^n \rightarrow R$ be energy. Let $T = {T_k}$ be a decreasing non-negative sequence that $T_k = 0$ for $k > N$ ($T$ is called cooling schedule or temperature).
+Let $a_0$ be an initial approximation. At each iteration $k \in N_0$:
+
+\begin{itemize}
+    \item choose $a^{*} \in Neighbours(a_k)$ where $Neighbours$ is a certain rule
+    \item if $f(a^{*}) \leq f(a_k)$ then $a_{k+1} = a^{*}$ if $f(a^{*}) > f(a_k)$ then $a_{k + 1} = a^{*}$ with probability
+    \begin{equation*}
+        e^{-\frac{f(a^{*}) - f(a_k)}{T_k}}
+    \end{equation*}
+    \item Stop if $T_k = 0$
+\end{itemize}
+
+\subsubsection*{Differential evolution}
+
+It is an metaheuristic algorithm that solves the optimization of maintaining a population of agent, i.e candidate solutions, creating
+new agents by combining existing ones and further keeping the best one.
+
+Choose $p \in [0, 1]$ the crossover probability, $w \in [0, 2]$ the differential weight and $N \geq 4$ the population size. Let $\textbf{x} \in \mathbb{R}^n $ denote an agent in the population.
+
+Until a termination criterion is met (e.g the number of iterations performed):
+\begin{itemize}
+    \item Randomly pick $N$ agents $\textbf{x}$ (i.e the population).
+    \item Pick three distinct agents \textbf{a}, \textbf{b} and \textbf{c} from the population, different from \textbf{x}.
+    \item Compute the trial vector $y = (y_1, ..., y_n)$ as follows. For $i = 1, ..., n$ pick $r_i \in U(0, 1)$. If $r_i < p$ then $y_i = a_i + w(b_i - c_i)$, otherwise $y_i = x_i$.
+    \item If $f(y) \leq f(x)$ the replace \textbf{x} with the  trial vector $y$, otherwise keep \textbf{x}.
+\end{itemize}
+
+Pick the best agent from the population and return it as the best found solution.
+
+\subsection*{Travelling Salesman Problem}
+
+Given a list of cities and their locations (usually specified as points on a plane), that task is to find the shortest route which will visit every city exactly once and return to the point of origin. There is no algorithm that solves this problem wiht polynomial complexity so that it can be approximately solved via optimization methods i.e simulated anneling.
