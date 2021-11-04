@@ -1,0 +1,23 @@
+\section*{Theory}
+
+Graphs are commonly used in modeling different complex systems like social, transport communication and other kind of networks.
+
+Undirected graph is a pair $G = (V, E)$ where $V = {v_i}$ is vertices set and $E = {e_{ij}} = {(v_i, v_j)}$ - set of vertices pairs that called edges.
+Number of vertices is denoted as $|V|$, number of edges as $|E|$.
+
+Path in graph is a sequence of distict edges connects distinct vertices. The path length is edges count (or sum of weights)in path.
+If there is a path between two vertices $v_1, v_2$ they are called connected, unconnected otherwise. The connected graph is a graph with every pair of vertices beeing conected.
+The greatest connected subgraph of grapht is called connectivity component.
+
+\subsection*{Graph representaions}
+
+\textbf{Adjacency matrix} is a matrix where rows and columns belongs to vertices. So that $a_{ij} = 0|1$ element of matrix means that
+that vertices $v_i$ and $v_j$ are adjacent (or not) in case of value 1 (0). This representaion requires $O(|V|^2)$ of memory space.
+
+\textbf{Adjacency list} is representation where there is list of adjacent vertices for each vertix in graph. It requires $O(|V| + |E|)$ of memory space. That is more efficient then adjacency matrix in case of sparse graphs where $|E| << |V|^2$.
+
+\subsection*{Basic algorithms}
+
+\textbf{Depth-first search} is algorithm of graph traversing when it starts from initial vertex and walk deep in graph before backstep to another vertex. The time complexity is $O(|V| + |E|)$.
+
+\textbf{Breadth-first search} is algorithm of graph traversing with step-by-step traversing vertices on the same deep-level from initial one. Its time complexity is $O(|V| + |E|)$.
