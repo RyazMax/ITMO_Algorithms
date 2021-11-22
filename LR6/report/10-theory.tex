@@ -1,0 +1,51 @@
+\section*{Theory}
+
+Graphs are commonly used in modeling different complex systems like social, transport communication and other kind of networks.
+
+Undirected graph is a pair $G = (V, E)$ where $V = {v_i}$ is vertices set and $E = {e_{ij}} = {(v_i, v_j)}$ - set of vertices pairs that called edges.
+Number of vertices is denoted as $|V|$, number of edges as $|E|$.
+
+Path in graph is a sequence of distict edges connects distinct vertices. The path length is edges count (or sum of weights)in path.
+If there is a path between two vertices $v_1, v_2$ they are called connected, unconnected otherwise. The connected graph is a graph with every pair of vertices beeing conected.
+The greatest connected subgraph of grapht is called connectivity component.
+
+\subsection*{Dijkstra's algorithm}
+
+The algorithm is solving the problem of finding the shortest paths from the given source vertix to all other vertices.
+
+Main idea of algorithm is to generate a shortest path tree (SPT) with the soure as a root, with maintaining two sets: one set contains vertices included in SPT, other set includes vertices not yet included in SPT. At every step, it finds a vertex which in the other set and has a minimum distance from the source.
+
+Main steps of algorthms: 
+\begin{itemize}
+    \item Create an SPT set \textbf{sptSet} that keeps track of vertices included in SPT, i.e whose minimum distance from source is calculated and finalized. Initially, this set is empty.
+    \item Assign a distance value to all vertices in the input graph. Assign the distance value for the source vertex as 0. For all other vertices as $\infty$.
+    \item While \textbf{sptSet} does not include all vertices:
+     \begin{itemize}
+         \item Pick a vertex $u \notin sptSet$ that has a minimum distance value
+         \item Include $u$ in $sptSet$
+         \item Update the distance values of all adjacent vertices of u. To update the distance value, iterate through all adjacent vertices. For every adjacent vertex $v$, if the sum of distance value of $u$ (from the source) and weight of edge $(u, v)$ is less than the distance value of $v$, the update the distance value of $v$.
+     \end{itemize}
+\end{itemize}
+
+Time complexity may differ from $O(|V|^2)$ to $O(|V|\cdot log|V|)$ based on algorithm of choosing vertex with minimal distant value.
+
+\subsection*{Bellman-Ford algorithm}
+
+This algorithm solves the problem of finding the shortest path from the source vertix to all other vertices on weighted grapht with possibly negative weithgs. If a graph contains negative cycle algorithm can detect it.
+
+On the $i-th$ iteration, Bellman-Ford caclulates the shortest paths withc have at most $i$ edges. As there is maximum $|V| - 1$ edges in any simple path, $i = 1, ..., |V| - 1$.
+Assuming that there is no negative cycle, if we have calculated shortest path with at most $i edges$, then an iteration over all edges guarantees to give shortest path with at most $(i + 1)$ edges. To check if there is a negative cycle, make $|V|th$ iteration. If at least one of the shortest paths become shorter, there is such a cycle.
+
+The time complexity of algorithm is $O(|V||E|)$.
+
+\subsection*{A* algorithm}
+
+The algorithm solves problem of finding the shortest path from a source vertex to target vertex.
+
+The idea of algorithm is that at each iteration, A* determines how to extend the path basing on the cost of the current path from the source and an estimate of the cost required to extend the path to the target. 
+
+\begin{equation*}
+    f(c_k) = g(c_k) + h(c_k)
+\end{equation*}
+
+The time complexity of algorithm is $O(|E|)$.
