@@ -1,0 +1,69 @@
+\section*{Theory}
+
+\subsection*{Basic measures:}
+
+$|V|$ - the number of vertices. 
+$|E|$ - the number of edges.
+
+\subsection*{Degree measures:}
+$d(v)$ - \textbf{degree of} $v$ - the number of edges for vertex $v$. \\
+$d_{in}(v)$ - \textbf{in-degree of} $v$ - the number of in-edges for vertex $v$. \\
+$d_{out}(v)$ - \textbf{out-degree of} $v$ - the number of out-edges for vertex $v$. \\
+$\overline{d} = \frac{1}{|V|}\Sigma_{v \in V}d(v)$ - \textbf{average degree} over all vertices.
+
+\subsection*{Distant measures:}
+Let $dist(u, v)$ be the distance (the shortest path length) between $v$ and $u$ than \\
+$\epsilon(v) = max_{u \in V}dist(u, v)$ - \textbf{eccentricity}, the greatest distance between $v$ and any other vertex. \\
+$r = min_{v \in V}\epsilon(v)$ - \textbf{radius} - the minimum eccentricity over all vertices. \\
+$D = max_{v \in V}\epsilon(V)$ - \textbf{diameter} - the maximum eccentricity over all vertices. \\
+$l = \frac{1}{|V|\cdot(|V| - 1)}\Sigma_{v \neq u} dist(u, v)$ - \textbf{average path length}
+
+\subsection*{Density measures}:
+
+\begin{equation*}
+    \rho = \frac{2 |E|}{|V|(|V| - 1)}
+\end{equation*}
+
+The \textbf{density} $\rho$ of an undirected $G$ is the ratio of $|E|$ and the number of possible edges. 
+If $\rho \approx 0$ graph is considered sparse.
+
+\subsection*{Modularity}
+
+\textbf{Modularity} Q measures the strength of division of a graph into clusters. Graphs with high $Q > 0$ have dense connections
+between the vertices within clusters but sparse between those in different clusters. Q compares the number of edges within clusters in $G$ with \textbf{the expected number of edges in a random graph} regardless of clusters.
+
+For $G$ with vertex $v$ having a degree of $d(v)$, \textbf{configuration model} cuts each edge into halves (each called a stub), and then each stub is rewired randomly with any other stub in $G$ (except itself). Thus, $d(v)$-distribution keeps the same but configuration model results in a new random graph.
+The total number of stubs is $\Sigma_{w \in V}d(w) = 2|E|$. For $i = 1, ..., d(v)$ let $s_i = 1$ if the $i-th$ stub of $v$  connects to one of stubs of $u$ and $s_i = 0$ otherwise.
+
+That results in
+
+\begin{equation*}
+    \mathbb{E} [s_i] = \frac{d(u)}{2|E| - 1}.
+\end{equation*}
+
+The total number of edges between $v$ and $u$ is $J_{vu} = \Sigma_{i=1}^{d(v)}s_i$, so
+
+\begin{equation*}
+    \mathbb{E} [J_{vu}] = \Sigma_{i=1}^{d(v)}\mathbb{E}[s_i] = \frac{d(v)d(u)}{2|E| - 1} \approx \frac{d(v)d(u)}{2|E|}
+\end{equation*}
+
+The difference between the actual number $A_{vu}$ of edges between $v$ and $u$ and the expected number of edges between them install
+
+\begin{equation*}
+    \Delta(u, v) = A_{vu} - \frac{d(v)d(u)}{2|E|}
+\end{equation*}
+
+Let $C$ be a division $G$ into cluster and $c(v)$ denote the cluster of $v$.
+
+\begin{itemize}
+    \item If $c(v) = c(u)$, $Q$ should increase if $\Delta(u, v) > 0$ and decrease, otherwise.
+    \item If $c(v) \neq c(u)$, $Q$ should not change.
+\end{itemize}
+
+Thus, after normalization
+
+\begin{equation*}
+    Q(C) = \frac{1}{2|E|}\Sigma_{v, u \in V} (A_{uv} - \frac{d(v)d(u)}{2|E|}) \cdot (c(v) == c(u))
+\end{equation*}
+
+Then $Q$ is maximized according to divisions $C$. That can be approximately done via numerical optimization.
