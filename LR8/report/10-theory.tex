@@ -1,0 +1,80 @@
+\section*{Theory}
+
+\subsection*{Task formulation}
+
+Let model the problem with connected, undirected graph $G = (V, E)$,
+where $V$ is the set of vertices, $E$ is the set of possible edges between pairs of vertices and for each edge $(u, v) \in E$, also there is a weight $w(u, v)$ specifying the cost
+to connect $u$ and $v$. We then wish to find an asyclic subset $T \subset E$ that connects all of the vertices and whose total weight
+
+\begin{equation*}
+    w(T) = \Sigma_{(u, v) \in T} w(u, v)
+\end{equation*}
+
+is minimized.Since $T$ is acyclic and connects all of the vertices, it must form a tree which is called \textbf{spanning tree}. The problem is called \textbf{minimum-spanning-tree problem}.
+
+In practice the problem can be interpreted in such ways:
+
+\begin{itemize}
+    \item there are number of cities and costs of building roads between them and we have to connect all cities with minimal cost
+    \item there are pins and that can be connected with wire, we need to connect them with minimum number of wire.
+\end{itemize}
+
+\subsection*{Prim algorithm}
+
+The idea of algorithm is to build mst iteratively with adding every edge one by one.
+Firstly, the mst is considered to consist from one (any) vertix. After that the edge with smallest edge is choosen and beeing added to MST.
+After that on every step the minimum edge with one vertix in MST and one vertix not in MST added to MST.
+At the end (if the graph was connected) will be added $N - 1$ edges. 
+
+\subsubsection*{Complexity analysis}
+
+In trivial implementation we need to add $N - 1$ edges and for every edge we have to find the one with minimum cost. It can be done simple by iterating edges list. Thus, the overall complexity is $O(nm)$ where $n$ - vertices number and $m$ - edges number.
+For dense graphs it goes to $O(n^3)$.
+
+For work of algorithm we have to maintain set/list of used vertices with $O(n)$ size and result edges list which is of size $n - 1$. Thus, space complexity (besides the graph storage) is $O(n)$.
+
+\subsubsection*{Dense graphs modification}
+
+The idea of this modification is to store the minimum cost edge for every vertix. So on every step we need to check all vertices for the minimum edge so this stage is done by $O(n)$.
+After adding edge to MST we need to update pointer to edges for vertices connected with new added vertix. So that this stage can be completed with $O(n)$ operations.
+
+So for the one iteration (per one edge) we need $O(n)$ operations. Thus for all edges we need $O(n^2)$ operations.
+
+This modification also requires $O(n)$ space as we need to maintain miminum edges for every vertix.
+
+\subsubsection*{Sparse graphs modification}
+
+This is a modification of upper modification. We can notice that we need next operations for each iterations:
+minimum finding, updating existing values(deleting, adding new ones). We can use such data-structure as \textbf{Balanced binnary tree} for example \textbf{Red-black tree} that allows to perform these operations by
+$O(logN)$. Thus, for finding miminum edge we need $O(logN)$ operations instead of $O(n)$. On the other hand, now for updating all vertices we need $O(nlogn)$ operations.
+But it can be noticed that we need only $O(m)$ miminum edges recalculations (as we have only $m$ edges), that means that for all operations of updating we need $O(m log n)$ operations.
+Thus, summing two operations (finding minimum, updating minimum) complexity we have $O(nlogn + mlogn)$, due to fact that the number of edges $m$ in connected graph is less than number of vertices $n$ the overall complexity is 
+\textbf{$O(m log n)$}. 
+
+The space complexity remains $O(n)$ as Reb-black trees have that complexity for their values (minimum edge for every vertix).
+
+\subsection*{Kruskal algorithm}
+
+The idea of algorithm is to assign each vertix to itself subtree and then unite trees according to edge costs. Thats done by
+sorting all edges at the start of algorithm $O(mlogm)$. After that iterating over sorted edges we unite different subtrees. To unite subtrees we update the $tree_id$ for every vertix in those subtrees. Thus for one unite it requires $O(n)$ operations and for all $n - 1$ edges we need overall $O(n^2)$ of operations.
+So the overall we need $O(mlogm + n^2)$ of operations.
+
+The space complexity remains $O(n)$ as we need to store tree\_id for every vertix.
+
+\subsection*{Disjoint set structure modification}
+
+For optimizing the operation uniting subtrees the disjoint set structure (DSU) can be used. It allows to perform both operations of looking-up the subsets of vertices and uniting them with $O(1)$ complexity.
+So the overall complexity is $O(mlogm)$.
+
+The space complexity remains $O(n)$ as DSU store tree\_id for every vertix.
+
+\subsection*{Overall theoretical analysis}
+
+From the obtained theoretical complexities we can conlcude that all versions of algorithms are similar in terms of space required for their work.
+
+On the other hand algorithm has different time complexity, moreover different modifications are more sensitive to vertices count and some to edges count. So the main factor for choosing the algorithm will be the density of graph.
+
+The worst complexity for all cases has base version of Prim algorithm. The next worst complexity has base version of Kruskal algorithm.
+
+For graphs with high density is preferable the version of Prim algorithm with complexity $O(n^2)$ due to fact it does not depends on number of edges. Although, for sparse graphs the other algorithm modifications can be choosen.
+
